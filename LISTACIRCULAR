@@ -1,0 +1,161 @@
+import java.util.Scanner;
+
+
+//-------[ANTONIO AURELIO PEREIRA]------//
+//-------[PUC MINAS]------//
+
+//-------[LISTA]------//
+
+
+class LISTA {
+
+    int[] array;
+    int inicio = 0;
+    int fim;
+
+    LISTA(int tamanho) {
+        array = new int[tamanho];
+        fim = 0;
+    }
+    
+    
+    
+  //-------[METODOS]------//
+  
+  
+//INSERE ELEMENTO EM QUALQUER LUGAR
+    void inserir(int x, int pos) {
+        if (fim >= array.length || pos < 0 || pos > fim) {
+            System.out.println("\tlista cheia!!");
+        } else {
+            for (int i = fim; i > pos; i--) {
+                array[i] = array[i - 1];
+            }
+            array[pos] = x;
+            fim++;
+        }
+    }
+    
+    
+                //REMOVE ELEMENTO DE QUALQUER LUGAR
+                    int remover(int pos) {
+                        if (fim == 0 || pos < 0 || pos >= fim) {
+                            System.out.println("\tErro!Posicao (" + pos + ") invalida!!");
+                        }
+                        int resp = array[pos];
+                        fim--;
+                        for (int i = pos; i < fim; i++) {
+                            array[i] = array[i + 1];
+                        }
+                        return resp;
+                    }
+
+    
+    //RETORNA BOLEANO DE LISTA VAZIA 
+    boolean isVazio() {
+        return fim <= 0;
+    }
+
+                    //IMPRIME O CONTEUDO DO ARRAY A PARTIR DE UMA POSICAO DEFINIDA PELO USUARIO
+                    void mostrarRec(int pos) {
+                        if (pos > fim) {
+                            System.out.println("\tErro!Posicao (" + pos + ") invalida!!");
+                        } else {
+                            System.out.print("[ | ");
+                            mostrarRecEngine(pos, 0, pos);
+                            System.out.println(" ]");
+                        }
+                    }
+                                    //METODO RECURSIVO EM SEPARADO PARA MELHOR OTIMIZACAO
+                                      void mostrarRecEngine(int x, int y, int z) {
+                                          if (x >= fim) {
+                                              if (y < z) {
+                                                  System.out.print(array[y] + " | ");
+                                                  mostrarRecEngine(x, y + 1, z);
+                                              }
+                                          } else {
+                                              System.out.print(array[x] + " | ");
+                                              mostrarRecEngine(x + 1, y, z);
+                                          }
+                                      }
+
+    //PESQUISA A EXISTENCIA DE ELEMENTO NO ARRAY
+    boolean pesquisar(int elemento) {
+        boolean teste = false;
+        for (int i = inicio; i < fim; i++) {
+            teste = array[i] == elemento;
+            if (teste) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+            //RETORNA A POSICAO DE ELEMENTO NO ARRAY
+                public int retornaPos(int elemento) {
+                    boolean teste = pesquisar(elemento);
+                    if (teste) {
+                        for (int i = inicio; i < fim; i++) {
+                            if (array[i] == elemento) {
+                                return i;
+                            }
+                        }
+                    } else {
+                        System.out.println("\tErro!Elemento (" + elemento + ") Nao encontrado!!");
+                    }
+                    return -1;
+                }
+
+    //-------[METODO MAIN]------//
+    public static void main(String[] args) throws Exception {
+        Scanner ler = new Scanner(System.in);
+
+        System.out.println("\t\tTUNIQK@GMAIL.COM");
+        LISTA lista = new LISTA(99);
+        System.out.println("---TESTE DE LISTA VAZIA -> " + lista.isVazio());
+
+        //preenchendo a lista
+        lista.inserir(99, 0);
+        lista.inserir(88, 1);
+        lista.inserir(77, 2);
+        lista.inserir(66, 3);
+        lista.inserir(55, 4);
+        lista.inserir(44, 5);
+        lista.inserir(33, 6);
+        lista.inserir(22, 7);
+        lista.inserir(11, 8);
+        lista.inserir(666, 9);
+        System.out.println("LISTA PREENCHIDA");
+        lista.mostrarRec(0);
+        System.out.println("\n");
+        System.out.println("IMPRIMINDO COM INICIO EM DIFERENTES POSICOES");
+        lista.mostrarRec(3);
+        lista.mostrarRec(8);
+        System.out.println("\n");
+        System.out.println("REMOVENDO 4TH -> " + lista.remover(3));
+        System.out.println("REMOVENDO 1ST -> " + lista.remover(0));
+        System.out.println("REMOVENDO 2ND -> " + lista.remover(1));
+
+        System.out.println("\nTESTE DE IMPRESSAO CIRCULAR - INICIO INDICE 0");
+        lista.mostrarRec(0);
+        System.out.println("\nTESTE DE IMPRESSAO CIRCULAR - INICIO INDICE 3");
+        lista.mostrarRec(3);
+        System.out.println("\nTESTE DE IMPRESSAO CIRCULAR - INICIO INDICE 7");
+        lista.mostrarRec(7);
+        System.out.println("\nTESTE DE IMPRESSAO FORA DO INDICE");
+        lista.mostrarRec(8);
+
+        System.out.println("\n---TESTE DE LISTA VAZIA -> " + lista.isVazio());
+
+        System.out.println("\nPOSICAO ELEMENTO 22  -> " + lista.retornaPos(22));
+        System.out.println("POSICAO ELEMENTO 666  -> " + lista.retornaPos(666));
+        System.out.println("POSICAO ELEMENTO 88  -> " + lista.retornaPos(88));
+        System.out.println("POSICAO ELEMENTO 13  -> " + lista.retornaPos(13));
+
+        System.out.println("\nPESQUISAR DE ELEMENTO 666  -> " + lista.pesquisar(666));
+        System.out.println("PESQUISAR DE ELEMENTO 13  -> " + lista.pesquisar(13));
+        System.out.println("PESQUISAR DE ELEMENTO 88  -> " + lista.pesquisar(88));
+        System.out.println("PESQUISAR DE ELEMENTO 21  -> " + lista.pesquisar(21));
+
+    }//-----
+}//----
